@@ -1,11 +1,28 @@
 get http://localhost:6000/user-api/users
 
+### finding user based on username
+get http://localhost:6000/user-api/users/25
+
 ###post req to create user
 post http://localhost:6000/user-api/user
 Content-Type: application/json
 
 {
-    "name":"ravi",
-    "age":30,
-    "email":"ravi@mail.com"
+    "username":"bhanu",
+    "password":"bhanu",
+    "city":"Hyderabad",
+    "age":25
+
 }
+
+###post req to login user(user authentication)
+post http://localhost:6000/user-api/login
+Content-Type: application/json
+
+{
+    "username":"bhanu",
+    "password":"bhanu"
+}
+
+###delete user
+delete http://localhost:6000/user-api/
