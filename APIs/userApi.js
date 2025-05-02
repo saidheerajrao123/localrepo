@@ -4,6 +4,7 @@ const expressAsyncHandler = require("express-async-handler")
 const UserModel=require('../models/userModel')
 const bcryptjs=require('bcryptjs')
 const jwt=require('jsonwebtoken')
+const verifyToken = require("../middlewares/verifyToken")
 
 // add body parser middleware
 userApp.use(exp.json())
@@ -69,7 +70,7 @@ userApp.post('/login',expressAsyncHandler(async(req,res)=>{
       // create JWT token
       let signedToken=jwt.sign({username:userInDB.username},'abcdef',{expiresIn:'1d'})
       // send res
-      res.send({message:"login success",token:signedToken,payload:userInDB})
+      res.send({message:"login success",token:signedToken,payload:userInDB  })
     }
   }
 }))
@@ -95,6 +96,13 @@ userApp.put(
     res.send({ message: "updated user", payload: updatedDoc });
   })
 );
+
+// protected routes
+userApp.get('/protected',verifyToken,expressAsyncHandler(async(req,res)=>{
+    res.send({message:"This is protected data"})
+}))
+
+
 
 //delete user
 userApp.delete(
